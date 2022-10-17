@@ -9,7 +9,6 @@ const Home = () => {
   const [loginStatus, loginStatusSet] = useState(null);
   const [setVariables, setVariablesSet] = useState(0);
 
-
   const [sourceIp, sourceIpSet] = useState(null);
   const [destIp, destIpSet] = useState(null);
   const [hostname, hostnameSet] = useState(null);
@@ -46,7 +45,7 @@ const Home = () => {
   const [portalAddr, portalAddrSet] = useState(null);
   const [policyId, policyIdSet] = useState(null);
 
-
+  const [userData, userDataSet] = useState(null);
 
   useEffect(() => {
     if (setVariables === 0) {
@@ -91,8 +90,10 @@ const Home = () => {
     if (setVariables === 1) {
       window.history.replaceState({}, document.title, "/");
     }
-    if (loginStatus != null) {
-      addToFirebase(sourceIp,
+    if (loginStatus != null && loginStatus!=0) {
+      addToFirebase({
+        loginStatus,
+        sourceIp,
         destIp,
         hostname,
         service,
@@ -126,7 +127,9 @@ const Home = () => {
         apName,
         deviceType,
         portalAddr,
-        policyId
+        policyId,
+        userData
+      }
       );
       setTimeout(() => {
         console.log("You Are LogedIn successfuly Redirect...");
@@ -136,7 +139,7 @@ const Home = () => {
   }, [loginStatus, setVariables]);
   return (
     <div className="home_class">
-      {loginStatus === 1 && <FortinetForm values={{
+      {loginStatus === "1" && <FortinetForm values={{
         sourceIp,
         destIp,
         hostname,
@@ -174,7 +177,7 @@ const Home = () => {
         policyId,
         loginStatus
       }} />}
-      <Auth loginStatusSet={loginStatusSet} props={{agreeVal,declineVal}} />
+      <Auth loginStatusSet={loginStatusSet} agreeVal={{ agreeVal }} declineVal={{ declineVal }} userDataSet={userDataSet} />
     </div>
   );
 };

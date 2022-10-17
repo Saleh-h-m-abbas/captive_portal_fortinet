@@ -7,14 +7,13 @@ import {
 import PhoneButton from "../phone_button/PhoneButton";
 import { signInWithGoogle, signInWithFacebook } from "../../firebase/firebase";
 
-const Auth = ({loginStatusSet},props) => {
-
+const Auth = ({loginStatusSet,userDataSet,agreeVal,declineVal}) => {
     return (
         <div>
             <FacebookLoginButton onClick={signInWithFacebook}>
                 <span>Sign in with Facebook</span>
             </FacebookLoginButton>
-            <GoogleLoginButton onClick={() => signInWithGoogle(loginStatusSet,props.agreeVal,props.declineVal)}>
+            <GoogleLoginButton onClick={() => signInWithGoogle({loginStatusSet,agreeVal,declineVal,userDataSet})}>
                 <span>Sign in with Google</span>
             </GoogleLoginButton>
             <TwitterLoginButton onClick={() => loginStatusSet(1)}>

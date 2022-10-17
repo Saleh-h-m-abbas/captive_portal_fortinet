@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, serverTimestamp,addDoc, collection } from "firebase/firestore";
+import { getFirestore, serverTimestamp, addDoc, collection } from "firebase/firestore";
 import {
   getAuth,
   GoogleAuthProvider,
@@ -24,33 +24,42 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
-export const signInWithGoogle = async (loginStatusSet,loginValue,errorValue) => {
+export const signInWithGoogle = async ({ loginStatusSet, agreeVal, declineVal, userDataSet }) => {
+
+
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
-  try{
+  try {
     const googleSingIn = await signInWithPopup(auth, provider);
-    console.log(googleSingIn);
-    console.log( JSON.stringify(googleSingIn.user));
-    console.log(googleSingIn.user.email);
-    console.log(googleSingIn.user.displayName);
-    console.log(googleSingIn.user.getIdToken);
-    console.log(googleSingIn.user.phoneNumber);
-    console.log(googleSingIn.user.photoURL);
-    console.log(googleSingIn.user.providerId);
-    console.log(googleSingIn.user.providerData);
-    console.log(googleSingIn.user.uid);
-    loginStatusSet(loginValue);
-  }catch(error){
+    const token = await googleSingIn.user.getIdTokenResult();
+    userDataSet({ username: googleSingIn.user.displayName, email: googleSingIn.user.email,
+      phoneNumber: googleSingIn.user.phoneNumber,
+      userPhoto: googleSingIn.user.photoURL,
+      uid: googleSingIn.user.uid,
+      emailVerified: googleSingIn.user.emailVerified,
+      isAnonymous: googleSingIn.user.isAnonymous,
+      providerId: googleSingIn.user.providerId,
+      creationTime: googleSingIn.user.metadata.creationTime,
+      lastSignInTime: googleSingIn.user.metadata.lastSignInTime,
+      refreshToken: googleSingIn.user.refreshToken,
+      tenantId: googleSingIn.user.tenantId,
+      operationType: googleSingIn.operationType,
+      authType: googleSingIn.user.providerData[0].providerId,
+      token: token.token
+      });
+    loginStatusSet(agreeVal.agreeVal);
+  } catch (error) {
     console.log(error);
-    loginStatusSet(errorValue);
+    loginStatusSet(declineVal.declineVal);
   }
 };
 export const signInWithFacebook = async () => {
   const provider = new FacebookAuthProvider();
   provider.setCustomParameters({
     display: "popup",
+    client_id:"2250daf5fe1776a480b561c90c71cda7",
   });
-  provider.addScope("user_birthday");
+  provider.addScope("email");
   try {
     const facebookSignIn = await signInWithRedirect(auth, provider);
     console.log(facebookSignIn);
@@ -62,13 +71,25 @@ export const signInWithFacebook = async () => {
 export const addToFirebase = async (props) => {
   try {
     const docRef = await addDoc(collection(db, "users"), {
+      ...props.userData,
       loginStatus: props.loginStatus,
-      magic: props.magic,
-      redirectIp: props.redirectIp,
+      created: serverTimestamp(),
+      magicVal: props.magicVal,
       userIp: props.userIp,
       userMac: props.userMac,
-      created: serverTimestamp()
+      apMac: props.apMac,
+      apIp: props.apIp,
+      apSsid: props.apSsid,
+      protUri: props.protUri,
+      disclaimerAct: props.disclaimerAct,
+      disclaimerMethod: props.disclaimerMethod,
+      cpAuthSsid: props.cpAuthSsid,
+      cpAuthIntf: props.cpAuthIntf,
+      deviceType: props.deviceType,
+      portalAddr: props.portalAddr,
+      policyId: props.policyId,
     });
+
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
