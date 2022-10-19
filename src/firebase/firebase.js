@@ -24,7 +24,7 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
-export const signInWithGoogle = async ({ loginStatusSet, agreeVal, declineVal, userDataSet }) => {
+export const signInWithGoogle = async ({ loginStatusSet, userDataSet }) => {
 
 
   const provider = new GoogleAuthProvider();
@@ -47,10 +47,10 @@ export const signInWithGoogle = async ({ loginStatusSet, agreeVal, declineVal, u
       authType: googleSingIn.user.providerData[0].providerId,
       token: token.token
       });
-    loginStatusSet(agreeVal.agreeVal);
+    loginStatusSet("1");
   } catch (error) {
     console.log(error);
-    loginStatusSet(declineVal.declineVal);
+    loginStatusSet("0");
   }
 };
 export const signInWithFacebook = async () => {
@@ -74,20 +74,14 @@ export const addToFirebase = async (props) => {
       ...props.userData,
       loginStatus: props.loginStatus,
       created: serverTimestamp(),
-      magicVal: props.magicVal,
-      userIp: props.userIp,
-      userMac: props.userMac,
-      apMac: props.apMac,
-      apIp: props.apIp,
-      apSsid: props.apSsid,
-      protUri: props.protUri,
-      disclaimerAct: props.disclaimerAct,
-      disclaimerMethod: props.disclaimerMethod,
-      cpAuthSsid: props.cpAuthSsid,
-      cpAuthIntf: props.cpAuthIntf,
-      deviceType: props.deviceType,
-      portalAddr: props.portalAddr,
-      policyId: props.policyId,
+      post: props.postVal,
+      user_mac: props.usermacVal,
+      ap_mac: props.apmacVal,
+      ap_ip: props.apipVal,
+      user_ip: props.useripVal,
+      ssid: props.ssidVal,
+      ap_name: props.apnameVal,
+      b_ssid: props.bssidVal,
     });
 
     console.log("Document written with ID: ", docRef.id);
