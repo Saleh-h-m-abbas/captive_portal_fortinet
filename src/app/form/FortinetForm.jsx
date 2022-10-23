@@ -4,9 +4,9 @@ const FortinetForm = (props) => {
           
     <input type="hidden" name="magic" value={props.values.magicVal}/>
     
-    <input type="hidden" id="apmac" name="username" value="captive_portal"/>
+    <input type="hidden" id="apmac" name="username" value="captive_portal2"/>
     
-    <input type="hidden" id="apip" name="password" value="Abcd@1234"/>
+    <input type="hidden" id="apip" name="password" value="Abcd@12341"/>
     
   </form>
   );

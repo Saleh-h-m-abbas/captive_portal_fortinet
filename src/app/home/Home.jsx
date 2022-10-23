@@ -8,10 +8,6 @@ import { addToFirebase } from "../../firebase/firebase";
 const Home = () => {
   const [loginStatus, loginStatusSet] = useState(null);
   const [setVariables, setVariablesSet] = useState(0);
-  // https://172.16.16.2:3000/?login&
-  // post=http://172.16.16.1:1000/fgtauth&
-  // magic=01080a8beb41df9a&usermac=7c:21:4a:28:3e:4e&apmac=d4:76:a0:38:44:a8&apip=172.16.17.2&userip=172.16.16.2&
-  // ssid=CaptivePortal&apname=FP321E5H21000597&bssid=d4:76:a0:38:44:b8
   const [postVal, postValSet] = useState(null);
   const [magicVal, magicValSet] = useState(null);
   const [usermacVal, usermacValSet] = useState(null);
@@ -21,7 +17,6 @@ const Home = () => {
   const [ssidVal, ssidValSet] = useState(null);
   const [apnameVal, apnameValSet] = useState(null);
   const [bssidVal, bssidValSet] = useState(null);
-
 
   //Firebase Auth Data
   const [userData, userDataSet] = useState(null);
@@ -41,9 +36,9 @@ const Home = () => {
       setVariablesSet(1);
     }
     if (setVariables === 1) {
-      // window.history.replaceState({}, document.title, "/");
+      window.history.replaceState({}, document.title, "/");
     }
-    if (loginStatus != null && loginStatus!=0) {
+    if (loginStatus !== null && loginStatus!==0) {
       addToFirebase({
         loginStatus,
         postVal,
@@ -64,6 +59,8 @@ const Home = () => {
       }, 2000);
     }
   }, [loginStatus, setVariables]);
+
+  // console.log(magicVal);
   return (
     <div className="home_class">
       {loginStatus === "1" && <FortinetForm values={{

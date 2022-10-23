@@ -2,7 +2,7 @@ import {createButton} from "react-social-login-buttons";
 
 const config = {
   text: "Sign in with Phone",
-  icon: "phone",
+  icon: "FaFacebookF",
   iconFormat: name => `fa fa-${name}`,
   style: { background: "#1FA26B" },
   activeStyle: { background: "#1F9632" }
