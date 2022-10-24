@@ -12,12 +12,14 @@
     "dotenv": "^16.0.3",
     "firebase": "^9.12.0",
     "firebaseui": "^6.0.1",
+    "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-scripts": "5.0.1",
     "react-social-login-buttons": "^3.6.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
