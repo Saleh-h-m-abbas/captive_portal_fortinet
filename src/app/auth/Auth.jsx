@@ -52,19 +52,19 @@ const Auth = ({ loginStatusSet, userDataSet, magicVal, postVal }) => {
             <br />
             Premium Sign In{" "}
           </div>
-          <SignIn values={{ postVal, magicVal }} />
+          <SignIn magicVal={magicVal} postVal={postVal} />
           <div style={{ color: "#FFFFFF" }}>@2022 PowerEye</div>
         </div>
         <div className="back">
-          <div onClick={() => setFlip(!flip)} className="btn"> &laquo; Back</div>
+          <div onClick={() => setFlip(!flip)} className="btn"> &laquo;Back</div>
           <div className="phone-title">Phone Number</div>
-          <select name="country" id="country">
+          {/* <select name="country" id="country">
             <option value="ps">+970</option>
             <option value="il">+972</option>
 
           </select>
-          <input ></input>
-          <button>Send SMS</button>
+          <input ></input> */}
+          {/* <button>Send SMS</button> */}
         </div>
       </div>
     </>

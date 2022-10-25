@@ -1,14 +1,13 @@
 import "./SignIn.css";
 import { SignInSchema } from "./validation/Validation";
 import { Formik } from "formik";
-const SignIn = (props) => {
+const SignIn = ({magicVal,postVal}) => {
   return (
     <>
       <Formik
         validationSchema={SignInSchema}
         initialValues={{ username: "", password: "", isSubmitting: false }}
         onSubmit={(values, { setSubmitting }) => {
-          alert(JSON.stringify(values));
           document.forms[0].submit();
           setSubmitting(true);
         }}
@@ -27,13 +26,13 @@ const SignIn = (props) => {
               <form
                 noValidate
                 onSubmit={handleSubmit}
-                action={props.values.postVal}
+                action={postVal.postVal}
                 method="post"
               >
                 <input
                   type="hidden"
                   name="magic"
-                  value={props.values.magicVal}
+                  value={magicVal.magicVal}
                 />
 
                 <input

@@ -46,6 +46,7 @@ input {
 }
 
 .error {
+  display: contents;
   color: red;
   background-color: rgba(66, 65, 65, 0.521);
   text-align: left;
