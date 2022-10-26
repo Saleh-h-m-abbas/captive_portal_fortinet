@@ -41,7 +41,7 @@ body, html {
 }
 /* TODO::Get right url */
 .App {
-  background-image: url('../public/Istishari_Arab_Hospital_005.jpg');
+  /* background-image: url('../public/Istishari_Arab_Hospital_005.jpg'); */
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;

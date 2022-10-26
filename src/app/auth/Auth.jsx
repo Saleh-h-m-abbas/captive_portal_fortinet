@@ -4,14 +4,19 @@ import {
   FaFacebookF,
   FaGoogle,
   FaTwitter,
-  FaApple,
+  // FaApple,
   FaPhoneAlt,
 
 } from "react-icons/fa";
 import { useState } from "react";
 import SignIn from "./SignInWithCredentials/SignIn";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
-const Auth = ({ loginStatusSet, userDataSet, magicVal, postVal }) => {
+
+const Auth = ({ loginStatusSet, userDataSet, loadingSet, magicVal, postVal }) => {
   const [flip, setFlip] = useState(false);
   return (
     <>
@@ -22,27 +27,22 @@ const Auth = ({ loginStatusSet, userDataSet, magicVal, postVal }) => {
             <br /> Sign In with
           </div>
           <div className="social-group">
-            <div className="social-icons" onClick={signInWithFacebook}>
-              {" "}
+            <div className="social-icons" onClick={() => signInWithFacebook({ loginStatusSet, userDataSet, loadingSet })}>
               <FaFacebookF />
             </div>
             <div
               className="social-icons"
-              onClick={() => signInWithGoogle({ loginStatusSet, userDataSet })}
+              onClick={() => signInWithGoogle({ loginStatusSet, userDataSet, loadingSet })}
             >
-              {" "}
               <FaGoogle />
             </div>
             <div className="social-icons" onClick={() => loginStatusSet("1")}>
-              {" "}
               <FaTwitter />
             </div>
-            <div className="social-icons">
-              {" "}
+            {/* <div className="social-icons">
               <FaApple />
-            </div>
+            </div> */}
             <div className="social-icons" onClick={() => setFlip(!flip)}>
-              {" "}
               <FaPhoneAlt />
             </div>
           </div>
@@ -52,20 +52,37 @@ const Auth = ({ loginStatusSet, userDataSet, magicVal, postVal }) => {
             <br />
             Premium Sign In{" "}
           </div>
-          <SignIn magicVal={magicVal} postVal={postVal} />
+          <SignIn magicVal={magicVal} postVal={postVal} loadingSet={loadingSet} />
           <div style={{ color: "#FFFFFF" }}>@2022 PowerEye</div>
         </div>
         <div className="back">
-          <div onClick={() => setFlip(!flip)} className="btn"> &laquo;Back</div>
+   
           <div className="phone-title">Phone Number</div>
-          {/* <select name="country" id="country">
+          <div>
+          <select name="country" id="country">
             <option value="ps">+970</option>
             <option value="il">+972</option>
 
           </select>
-          <input ></input> */}
-          {/* <button>Send SMS</button> */}
+          <input placeholder="Enter Your Phone Number"></input>
+          <button>Send SMS</button>
+          </div>
+          <div onClick={() => setFlip(!flip)} className="btn"> &laquo;Back</div>
         </div>
+             <InputGroup className="mb-3">
+        <DropdownButton
+          variant="outline-secondary"
+          title="Dropdown"
+          id="input-group-dropdown-1"
+        >
+          <Dropdown.Item href="#">Action</Dropdown.Item>
+          <Dropdown.Item href="#">Another action</Dropdown.Item>
+          <Dropdown.Item href="#">Something else here</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item href="#">Separated link</Dropdown.Item>
+        </DropdownButton>
+        <Form.Control aria-label="Text input with dropdown button" />
+      </InputGroup>
       </div>
     </>
   );

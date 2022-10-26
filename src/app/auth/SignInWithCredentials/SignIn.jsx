@@ -1,15 +1,17 @@
 import "./SignIn.css";
 import { SignInSchema } from "./validation/Validation";
 import { Formik } from "formik";
-const SignIn = ({magicVal,postVal}) => {
+const SignIn = ({ magicVal, postVal, loadingSet }) => {
   return (
     <>
       <Formik
         validationSchema={SignInSchema}
         initialValues={{ username: "", password: "", isSubmitting: false }}
         onSubmit={(values, { setSubmitting }) => {
+          loadingSet(true);
           document.forms[0].submit();
           setSubmitting(true);
+          loadingSet(false);
         }}
       >
         {({
@@ -69,7 +71,7 @@ const SignIn = ({magicVal,postVal}) => {
                   type="submit"
                   disabled={isSubmitting}
                 >
-                    <span>Sign In </span>
+                  <span>Sign In </span>
                 </button>
               </form>
             </div>

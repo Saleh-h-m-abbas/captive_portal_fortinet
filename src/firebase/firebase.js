@@ -5,7 +5,6 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   FacebookAuthProvider,
-  signInWithRedirect,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -24,15 +23,16 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
-export const signInWithGoogle = async ({ loginStatusSet, userDataSet }) => {
+export const signInWithGoogle = async ({ loginStatusSet, userDataSet, loadingSet }) => {
 
-
+  loadingSet(true);
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
   try {
     const googleSingIn = await signInWithPopup(auth, provider);
     const token = await googleSingIn.user.getIdTokenResult();
-    userDataSet({ username: googleSingIn.user.displayName, email: googleSingIn.user.email,
+    userDataSet({
+      username: googleSingIn.user.displayName, email: googleSingIn.user.email,
       phoneNumber: googleSingIn.user.phoneNumber,
       userPhoto: googleSingIn.user.photoURL,
       uid: googleSingIn.user.uid,
@@ -46,26 +46,46 @@ export const signInWithGoogle = async ({ loginStatusSet, userDataSet }) => {
       operationType: googleSingIn.operationType,
       authType: googleSingIn.user.providerData[0].providerId,
       token: token.token
-      });
+    });
+
     loginStatusSet("1");
+    loadingSet(false);
   } catch (error) {
     console.log(error);
     loginStatusSet("0");
+    loadingSet(false);
+
   }
 };
-export const signInWithFacebook = async () => {
+export const signInWithFacebook = async ({ loginStatusSet, userDataSet, loadingSet }) => {
+  loadingSet(true);
   const provider = new FacebookAuthProvider();
   provider.setCustomParameters({
     display: "popup",
-    client_id:"2250daf5fe1776a480b561c90c71cda7",
+    client_id: "2250daf5fe1776a480b561c90c71cda7",
   });
   provider.addScope("email");
   try {
-    const facebookSignIn = await signInWithRedirect(auth, provider);
+    const facebookSignIn = await signInWithPopup(auth, provider);
     console.log(facebookSignIn);
+    console.log(facebookSignIn.user.displayName);
+    console.log(facebookSignIn.user.email);
+    console.log(facebookSignIn.user.emailVerified);
+    console.log(facebookSignIn.user.isAnonymous);
+    console.log(facebookSignIn.user.phoneNumber);
+    console.log(facebookSignIn.user.photoURL);
+
+    // loginStatusSet(1);
+    loadingSet(false);
+
   } catch (error) {
     console.log(error);
+    // loginStatusSet(0);
+    loadingSet(false);
+
+
   }
+  loadingSet(false);
 };
 
 export const addToFirebase = async (props) => {

@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import FortinetForm from "../form/FortinetForm";
 import Auth from "../auth/Auth";
 import { addToFirebase } from "../../firebase/firebase";
+import { Circles } from 'react-loader-spinner'
 
 const Home = () => {
   const [loginStatus, loginStatusSet] = useState(null);
+  const [loading, loadingSet] = useState(false);
   const [setVariables, setVariablesSet] = useState(0);
   const [postVal, postValSet] = useState(null);
   const [magicVal, magicValSet] = useState(null);
@@ -35,6 +37,9 @@ const Home = () => {
       setVariablesSet(1);
     }
     if (setVariables === 1) {
+      if (postVal === null) {
+        console.log("Retray");
+      }
       window.history.replaceState({}, document.title, "/");
     }
     if (loginStatus !== null && loginStatus !== 0) {
@@ -61,29 +66,45 @@ const Home = () => {
 
   // console.log(magicVal);
   return (
-    <div className="home_class">
-      {loginStatus === "1" && (
-        <FortinetForm
-          values={{
-            postVal,
-            magicVal,
-            usermacVal,
-            apmacVal,
-            apipVal,
-            useripVal,
-            ssidVal,
-            apnameVal,
-            bssidVal,
-          }}
+    <body>
+{loading&&  <div className="loader">
+        <Circles
+          height="100"
+          width="100"
+          color="#4fa94d"
+          ariaLabel="circles-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        /></div>}
+        
+     
+      <div className="home_class">
+      {loading&&<div className="loader-page" ></div>}
+        {loginStatus === "1" && (
+          <FortinetForm
+            values={{
+              postVal,
+              magicVal,
+              usermacVal,
+              apmacVal,
+              apipVal,
+              useripVal,
+              ssidVal,
+              apnameVal,
+              bssidVal,
+            }}
+          />
+        )}
+        <Auth
+          loginStatusSet={loginStatusSet}
+          userDataSet={userDataSet}
+          postVal={{ postVal }}
+          magicVal={{ magicVal }}
+          loadingSet={loadingSet}
         />
-      )}
-      <Auth
-        loginStatusSet={loginStatusSet}
-        userDataSet={userDataSet}
-        postVal={{ postVal }}
-        magicVal={{ magicVal }}
-      />
-    </div>
+      </div>
+    </body>
   );
 };
 
