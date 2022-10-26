@@ -11,7 +11,10 @@ import {
 import { useState } from "react";
 import SignIn from "./SignInWithCredentials/SignIn";
 
+import SignInPhoneNumber from "./SignInWithPhoneNumber/SignInWithPhoneNumber";
+
 const Auth = ({ loginStatusSet, userDataSet, loadingSet, magicVal, postVal }) => {
+
   const [flip, setFlip] = useState(false);
   return (
     <>
@@ -45,23 +48,14 @@ const Auth = ({ loginStatusSet, userDataSet, loadingSet, magicVal, postVal }) =>
           <div className="header">
             or
             <br />
-            Premium Sign In{" "}
+            Premium Sign In
           </div>
           <SignIn magicVal={magicVal} postVal={postVal} loadingSet={loadingSet} />
           <div style={{ color: "#FFFFFF" }}>@2022 PowerEye</div>
         </div>
-        <div className="back">
-   
-          <div className="phone-title">Phone Number</div>
-          <div>
-          <select name="country" id="country">
-            <option value="ps">+970</option>
-            <option value="il">+972</option>
+        <div id="back" className="back">
 
-          </select>
-          <input placeholder="Enter Your Phone Number"></input>
-          <button>Send SMS</button>
-          </div>
+          <SignInPhoneNumber loginStatusSet={loginStatusSet} userDataSet={userDataSet} loadingSet={loadingSet} />
           <div onClick={() => setFlip(!flip)} className="btn"> &laquo;Back</div>
         </div>
       </div>

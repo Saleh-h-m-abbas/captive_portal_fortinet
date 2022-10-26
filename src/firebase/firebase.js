@@ -68,19 +68,19 @@ export const signInWithFacebook = async ({ loginStatusSet, userDataSet, loadingS
   try {
     const facebookSignIn = await signInWithPopup(auth, provider);
     console.log(facebookSignIn);
-    console.log(facebookSignIn.user.displayName);
-    console.log(facebookSignIn.user.email);
-    console.log(facebookSignIn.user.emailVerified);
-    console.log(facebookSignIn.user.isAnonymous);
-    console.log(facebookSignIn.user.phoneNumber);
-    console.log(facebookSignIn.user.photoURL);
+    // console.log(facebookSignIn.user.displayName);
+    // console.log(facebookSignIn.user.email);
+    // console.log(facebookSignIn.user.emailVerified);
+    // console.log(facebookSignIn.user.isAnonymous);
+    // console.log(facebookSignIn.user.phoneNumber);
+    // console.log(facebookSignIn.user.photoURL);
 
-    // loginStatusSet(1);
+    loginStatusSet(1);
     loadingSet(false);
 
   } catch (error) {
     console.log(error);
-    // loginStatusSet(0);
+    loginStatusSet(0);
     loadingSet(false);
 
 

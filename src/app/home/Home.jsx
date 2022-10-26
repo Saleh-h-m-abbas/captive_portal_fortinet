@@ -7,7 +7,7 @@ import { Circles } from 'react-loader-spinner'
 
 const Home = () => {
   const [loginStatus, loginStatusSet] = useState(null);
-  const [loading, loadingSet] = useState(false);
+  const [loading, loadingSet] = useState(true);
   const [setVariables, setVariablesSet] = useState(0);
   const [postVal, postValSet] = useState(null);
   const [magicVal, magicValSet] = useState(null);
@@ -37,10 +37,11 @@ const Home = () => {
       setVariablesSet(1);
     }
     if (setVariables === 1) {
-      if (postVal === null) {
-        console.log("Retray");
-      }
+      // if (postVal === null) {
+      //   console.log("Retray");
+      // }
       window.history.replaceState({}, document.title, "/");
+      loadingSet(false);
     }
     if (loginStatus !== null && loginStatus !== 0) {
       addToFirebase({
@@ -66,7 +67,7 @@ const Home = () => {
 
   // console.log(magicVal);
   return (
-    <body>
+    <body >
 {loading&&  <div className="loader">
         <Circles
           height="100"
