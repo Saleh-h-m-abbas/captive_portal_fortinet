@@ -1,12 +1,10 @@
-import { signInWithGoogle, signInWithFacebook } from "../../firebase/firebase";
+import { signInWithGoogle, signInWithFacebook, signInWithTwitter } from "../../firebase/firebase";
 import "./AuthCss.css";
 import {
   FaFacebookF,
   FaGoogle,
   FaTwitter,
-  // FaApple,
   FaPhoneAlt,
-
 } from "react-icons/fa";
 import { useState } from "react";
 import SignIn from "./SignInWithCredentials/SignIn";
@@ -16,6 +14,7 @@ import SignInPhoneNumber from "./SignInWithPhoneNumber/SignInWithPhoneNumber";
 const Auth = ({ loginStatusSet, userDataSet, loadingSet, magicVal, postVal }) => {
 
   const [flip, setFlip] = useState(false);
+  const [codeSend, codeSendSet] = useState(false);
   return (
     <>
       <div className={`custom-card ${flip ? "flip" : ""}`}>
@@ -34,7 +33,7 @@ const Auth = ({ loginStatusSet, userDataSet, loadingSet, magicVal, postVal }) =>
             >
               <FaGoogle />
             </div>
-            <div className="social-icons" onClick={() => loginStatusSet("1")}>
+            <div className="social-icons" onClick={() => signInWithTwitter({ loginStatusSet, userDataSet, loadingSet })}>
               <FaTwitter />
             </div>
             {/* <div className="social-icons">
@@ -55,8 +54,8 @@ const Auth = ({ loginStatusSet, userDataSet, loadingSet, magicVal, postVal }) =>
         </div>
         <div id="back" className="back">
 
-          <SignInPhoneNumber loginStatusSet={loginStatusSet} userDataSet={userDataSet} loadingSet={loadingSet} />
-          <div onClick={() => setFlip(!flip)} className="btn"> &laquo;Back</div>
+          <SignInPhoneNumber loginStatusSet={loginStatusSet} userDataSet={userDataSet} loadingSet={loadingSet}  codeSendSet={codeSendSet} codeSend={codeSend} />
+          <div onClick={() => {setFlip(!flip);codeSendSet(false) }} className="btn"> &laquo;Back</div>
         </div>
       </div>
     </>

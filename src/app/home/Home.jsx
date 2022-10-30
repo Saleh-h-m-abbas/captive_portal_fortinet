@@ -8,6 +8,7 @@ import { Circles } from 'react-loader-spinner'
 const Home = () => {
   const [loginStatus, loginStatusSet] = useState(null);
   const [loading, loadingSet] = useState(true);
+  const [retryButton, retryButtonSet] = useState(false);
   const [setVariables, setVariablesSet] = useState(0);
   const [postVal, postValSet] = useState(null);
   const [magicVal, magicValSet] = useState(null);
@@ -37,13 +38,18 @@ const Home = () => {
       setVariablesSet(1);
     }
     if (setVariables === 1) {
-      // if (postVal === null) {
-      //   console.log("Retray");
-      // }
-      window.history.replaceState({}, document.title, "/");
-      loadingSet(false);
+      if (postVal !== null) {
+        window.history.replaceState({}, document.title, "/");
+        loadingSet(false);
+  
+      }else{
+        const intervalId = setInterval(() => {
+          retryButtonSet(true);
+        }, 1000);
+      }
     }
-    if (loginStatus !== null && loginStatus !== 0) {
+          
+    if (loginStatus !== null && loginStatus !== "0") {
       addToFirebase({
         loginStatus,
         postVal,
@@ -65,7 +71,9 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginStatus, setVariables]);
 
-  // console.log(magicVal);
+  const redirectToCaptivePortal=()=>{
+    window.location.href='http://www.msftconnecttest.com/redirect'
+  }
   return (
     <body >
 {loading&&  <div className="loader">
@@ -77,10 +85,13 @@ const Home = () => {
           wrapperStyle={{}}
           wrapperClass=""
           visible={true}
-        /></div>}
+        />
+        {retryButton&& <button className="button-redirect" onClick={()=>redirectToCaptivePortal()}>Please Try Again</button>}
+        
+        </div>}
         
      
-      <div className="home_class">
+     {!retryButton&& <div className="home_class">
       {loading&&<div className="loader-page" ></div>}
         {loginStatus === "1" && (
           <FortinetForm
@@ -104,7 +115,7 @@ const Home = () => {
           magicVal={{ magicVal }}
           loadingSet={loadingSet}
         />
-      </div>
+      </div>}
     </body>
   );
 };

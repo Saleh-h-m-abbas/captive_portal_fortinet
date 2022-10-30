@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   FacebookAuthProvider,
+  TwitterAuthProvider
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -29,27 +30,49 @@ export const signInWithGoogle = async ({ loginStatusSet, userDataSet, loadingSet
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
   try {
-    const googleSingIn = await signInWithPopup(auth, provider);
-    const token = await googleSingIn.user.getIdTokenResult();
-    userDataSet({
-      username: googleSingIn.user.displayName, email: googleSingIn.user.email,
-      phoneNumber: googleSingIn.user.phoneNumber,
-      userPhoto: googleSingIn.user.photoURL,
-      uid: googleSingIn.user.uid,
-      emailVerified: googleSingIn.user.emailVerified,
-      isAnonymous: googleSingIn.user.isAnonymous,
-      providerId: googleSingIn.user.providerId,
-      creationTime: googleSingIn.user.metadata.creationTime,
-      lastSignInTime: googleSingIn.user.metadata.lastSignInTime,
-      refreshToken: googleSingIn.user.refreshToken,
-      tenantId: googleSingIn.user.tenantId,
-      operationType: googleSingIn.operationType,
-      authType: googleSingIn.user.providerData[0].providerId,
-      token: token.token
+    await signInWithPopup(auth, provider).then((result) => {
+      // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+      // You can use these server side with your app's credentials to access the Twitter API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const secret = credential.secret;
+
+      // The signed-in user info.
+      const user = result.user;
+
+      userDataSet({
+        username: result.user.displayName, email: result.user.email,
+        phoneNumber: result.user.phoneNumber,
+        userPhoto: result.user.photoURL,
+        uid: result.user.uid,
+        emailVerified: result.user.emailVerified,
+        isAnonymous: result.user.isAnonymous,
+        providerId: result.user.providerId,
+        creationTime: result.user.metadata.creationTime,
+        lastSignInTime: result.user.metadata.lastSignInTime,
+        refreshToken: result.user.refreshToken,
+        tenantId: result.user.tenantId,
+        operationType: result.operationType,
+        authType: result.user.providerData[0].providerId,
+        token: token
+      });
+
+      loginStatusSet("1");
+      loadingSet(false);
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+      loginStatusSet("0");
+      loadingSet(false);
     });
 
-    loginStatusSet("1");
-    loadingSet(false);
+
   } catch (error) {
     console.log(error);
     loginStatusSet("0");
@@ -66,26 +89,85 @@ export const signInWithFacebook = async ({ loginStatusSet, userDataSet, loadingS
   });
   provider.addScope("email");
   try {
-    const facebookSignIn = await signInWithPopup(auth, provider);
-    console.log(facebookSignIn);
-    // console.log(facebookSignIn.user.displayName);
-    // console.log(facebookSignIn.user.email);
-    // console.log(facebookSignIn.user.emailVerified);
-    // console.log(facebookSignIn.user.isAnonymous);
-    // console.log(facebookSignIn.user.phoneNumber);
-    // console.log(facebookSignIn.user.photoURL);
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
 
-    loginStatusSet(1);
-    loadingSet(false);
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        loginStatusSet("1");
+        loadingSet(false);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error);
+        loginStatusSet("0");
+        loadingSet(false);
+      });
+
+
 
   } catch (error) {
     console.log(error);
-    loginStatusSet(0);
+    loginStatusSet("0");
     loadingSet(false);
 
 
   }
   loadingSet(false);
+};
+
+export const signInWithTwitter = async ({ loginStatusSet, userDataSet, loadingSet }) => {
+  loadingSet(true);
+  const provider = new TwitterAuthProvider();
+  provider.setCustomParameters({
+    client_id: "VU9LeDI3cVVLanpHQ0F6OTRfOU86MTpjaQ",
+    redirect_uri: "https://fortigate-ca6e8.firebaseapp.com/__/auth/handler",
+  });
+  // provider.addScope("username");
+  try {
+   await signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+    // You can use these server side with your app's credentials to access the Twitter API.
+    const credential = TwitterAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    const secret = credential.secret;
+
+    // The signed-in user info.
+    const user = result.user;
+    
+    loginStatusSet("1");
+    loadingSet(false);
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = TwitterAuthProvider.credentialFromError(error);
+    console.log(error);
+    console.log(errorCode);
+    console.log(errorMessage);
+    console.log(email);
+    loginStatusSet("0");
+    loadingSet(false);
+  });
+
+
+  } catch (error) {
+    console.log(error);
+    loginStatusSet("0");
+    loadingSet(false);
+  }
 };
 
 export const addToFirebase = async (props) => {

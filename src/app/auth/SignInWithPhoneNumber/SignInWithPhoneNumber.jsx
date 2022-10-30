@@ -13,12 +13,28 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import { auth } from '../../../firebase/firebase';
 import SendIcon from '@mui/icons-material/Send';
 
-const SignInPhoneNumber = ({loadingSet,loginStatusSet,userDataSet}) => {
+const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet,codeSendSet,codeSend }) => {
     const [countryCode, countryCodeSet] = useState('+970');
     const [phoneNumber, phoneNumberSet] = useState('');
-    const [codeSend, codeSendSet] = useState(false);
+    
     const [veririficationCode, veririficationCodeSet] = useState(false);
-
+    // const useStyles = makeStyles((theme) => ({
+    //     root: {
+    //       "& .MuiFilledInput-root": {
+    //         backgroundColor: "rgb(232, 241, 250)"
+    //       },
+    //       "& .MuiFilledInput-root:hover": {
+    //         backgroundColor: "rgb(250, 232, 241)",
+    //         // Reset on touch devices, it doesn't add specificity
+    //         "@media (hover: none)": {
+    //           backgroundColor: "rgb(232, 241, 250)"
+    //         }
+    //       },
+    //       "& .MuiFilledInput-root.Mui-focused": {
+    //         backgroundColor: "rgb(250, 241, 232)"
+    //       }
+    //     }
+    //   }));
     const handleChange = (event) => {
         countryCodeSet(event.target.value);
     };
@@ -61,6 +77,7 @@ const SignInPhoneNumber = ({loadingSet,loginStatusSet,userDataSet}) => {
         }).catch((error) => {
             loadingSet(false);
             loginStatusSet("0");
+            console.log(error);
 
         });
     }
@@ -76,6 +93,7 @@ const SignInPhoneNumber = ({loadingSet,loginStatusSet,userDataSet}) => {
                                     <InputLabel id="country_code-label">Country Code</InputLabel>
                                     <Select
                                         labelId="country_code-label"
+                                        // className={useStyles.root}
                                         id="country_code"
                                         value={countryCode}
                                         label="Country Code"
@@ -125,16 +143,16 @@ const SignInPhoneNumber = ({loadingSet,loginStatusSet,userDataSet}) => {
                                     veririficationCodeSet(e.target.value);
                                 }}
                             /></Grid>
-                        <br/>
+                        <br />
                         <Grid container spacing={3}>
-                        
-                        <Grid item xs={12}>
-                            <Button id='sign-in-button' variant="contained" color="success" onClick={() => verifiy()}>
-                                verifiy
-                            </Button>
+
+                            <Grid item xs={12}>
+                                <Button id='sign-in-button' variant="contained" color="success" onClick={() => verifiy()}>
+                                    verifiy
+                                </Button>
                             </Grid>
                         </Grid>
-                        
+
                     </div>
 
                 }
