@@ -1,40 +1,13 @@
-
-
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import { auth } from '../../../firebase/firebase';
-import SendIcon from '@mui/icons-material/Send';
+import "./SignInWithPhoneNumber.css";
 
-const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet,codeSendSet,codeSend }) => {
+const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet, codeSendSet, codeSend, flip, setFlip }) => {
     const [countryCode, countryCodeSet] = useState('+970');
     const [phoneNumber, phoneNumberSet] = useState('');
-    
     const [veririficationCode, veririficationCodeSet] = useState(false);
-    // const useStyles = makeStyles((theme) => ({
-    //     root: {
-    //       "& .MuiFilledInput-root": {
-    //         backgroundColor: "rgb(232, 241, 250)"
-    //       },
-    //       "& .MuiFilledInput-root:hover": {
-    //         backgroundColor: "rgb(250, 232, 241)",
-    //         // Reset on touch devices, it doesn't add specificity
-    //         "@media (hover: none)": {
-    //           backgroundColor: "rgb(232, 241, 250)"
-    //         }
-    //       },
-    //       "& .MuiFilledInput-root.Mui-focused": {
-    //         backgroundColor: "rgb(250, 241, 232)"
-    //       }
-    //     }
-    //   }));
+
     const handleChange = (event) => {
         countryCodeSet(event.target.value);
     };
@@ -45,7 +18,6 @@ const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet,codeSendSet
         window.recaptchaVerifier = new RecaptchaVerifier('reCAPTCHA', {
             'size': 'invisible',
             'callback': (response) => {
-                // codeSendSet(true);
             }
         }, auth);
 
@@ -86,7 +58,35 @@ const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet,codeSendSet
             <div className="phone-title">Phone Number</div>
             <div>
                 {!codeSend && <div>
-                    <Grid container spacing={1}>
+                    <label id="country_code-label">Country Code</label>
+                                    <select
+                                        labelId="country_code-label"
+                                        // className={useStyles.root}
+                                        id="country_code"
+                                        value={countryCode}
+                                        label="Country Code"
+                                        defaultValue="+970"
+                                        onChange={handleChange}
+                                    >
+                                        <option value={"+970"}>+970</option>
+                                        <option value={"+972"}>+972</option>
+                                    </select>
+
+                                    <div>
+
+                                    <input
+                            variant="standard"
+                                required
+                                id="outlined-required"
+                                label="Phone Number"
+                                type="number"
+                                onInput={(e) => {
+                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 9)
+                                    phoneNumberSet(e.target.value);
+                                }}
+                            />
+                                        </div>
+                    {/* <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <Box sx={{ minWidth: 20 }}>
                                 <FormControl fullWidth >
@@ -108,6 +108,7 @@ const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet,codeSendSet
                         </Grid>
                         <Grid item xs={8}>
                             <TextField
+                            variant="standard"
                                 required
                                 id="outlined-required"
                                 label="Phone Number"
@@ -125,14 +126,14 @@ const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet,codeSendSet
                                 Send
                             </Button>
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                 </div>}
 
 
 
                 {codeSend &&
                     <div>
-                        <Grid>
+                        {/* <Grid>
                             <TextField
                                 required
                                 id="outlined-required"
@@ -151,13 +152,19 @@ const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet,codeSendSet
                                     verifiy
                                 </Button>
                             </Grid>
-                        </Grid>
+                        </Grid> */}
 
                     </div>
 
                 }
             </div>
-            <div id="reCAPTCHA"></div>
+
+            <div
+                onClick={() => { setFlip(!flip); codeSendSet(false) }} className="btn"
+            >
+                <span>Back </span>
+            </div>
+            <div hidden={true} id="reCAPTCHA"></div>
         </>
 
     );

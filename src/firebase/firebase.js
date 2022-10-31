@@ -31,14 +31,10 @@ export const signInWithGoogle = async ({ loginStatusSet, userDataSet, loadingSet
   provider.setCustomParameters({ prompt: "select_account" });
   try {
     await signInWithPopup(auth, provider).then((result) => {
-      // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
       // You can use these server side with your app's credentials to access the Twitter API.
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
-      const secret = credential.secret;
 
-      // The signed-in user info.
-      const user = result.user;
 
       userDataSet({
         username: result.user.displayName, email: result.user.email,
@@ -60,14 +56,6 @@ export const signInWithGoogle = async ({ loginStatusSet, userDataSet, loadingSet
       loginStatusSet("1");
       loadingSet(false);
     }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
       loginStatusSet("0");
       loadingSet(false);
     });
@@ -91,23 +79,30 @@ export const signInWithFacebook = async ({ loginStatusSet, userDataSet, loadingS
   try {
     await signInWithPopup(auth, provider)
       .then((result) => {
-        // The signed-in user info.
-        const user = result.user;
-
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const credential = FacebookAuthProvider.credentialFromResult(result);
         const accessToken = credential.accessToken;
+
+        userDataSet({
+          username: result.user.displayName,
+          email: result.user.email,
+          phoneNumber: result.user.phoneNumber,
+          userPhoto: result.user.photoURL,
+          uid: result.user.uid,
+          emailVerified: result.user.emailVerified,
+          isAnonymous: result.user.isAnonymous,
+          providerId: result.user.providerId,
+          creationTime: result.user.metadata.creationTime,
+          lastSignInTime: result.user.metadata.lastSignInTime,
+          refreshToken: result.user.refreshToken,
+          tenantId: result.user.tenantId,
+          operationType: result.operationType,
+          authType: result.user.providerData[0].providerId,
+          token: accessToken
+        });
         loginStatusSet("1");
         loadingSet(false);
       })
       .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = FacebookAuthProvider.credentialFromError(error);
         loginStatusSet("0");
         loadingSet(false);
       });
@@ -126,41 +121,43 @@ export const signInWithFacebook = async ({ loginStatusSet, userDataSet, loadingS
 
 export const signInWithTwitter = async ({ loginStatusSet, userDataSet, loadingSet }) => {
   loadingSet(true);
+  const auth = getAuth();
   const provider = new TwitterAuthProvider();
   provider.setCustomParameters({
-    client_id: "VU9LeDI3cVVLanpHQ0F6OTRfOU86MTpjaQ",
-    redirect_uri: "https://fortigate-ca6e8.firebaseapp.com/__/auth/handler",
+    display: "popup",
   });
-  // provider.addScope("username");
+  provider.addScope("email");
   try {
-   await signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-    // You can use these server side with your app's credentials to access the Twitter API.
-    const credential = TwitterAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    const secret = credential.secret;
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = TwitterAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
 
-    // The signed-in user info.
-    const user = result.user;
-    
-    loginStatusSet("1");
-    loadingSet(false);
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = TwitterAuthProvider.credentialFromError(error);
-    console.log(error);
-    console.log(errorCode);
-    console.log(errorMessage);
-    console.log(email);
-    loginStatusSet("0");
-    loadingSet(false);
-  });
+        userDataSet({
+          username: result.user.displayName,
+          email: result.user.email,
+          phoneNumber: result.user.phoneNumber,
+          userPhoto: result.user.photoURL,
+          uid: result.user.uid,
+          emailVerified: result.user.emailVerified,
+          isAnonymous: result.user.isAnonymous,
+          providerId: result.user.providerId,
+          creationTime: result.user.metadata.creationTime,
+          lastSignInTime: result.user.metadata.lastSignInTime,
+          refreshToken: result.user.refreshToken,
+          tenantId: result.user.tenantId,
+          operationType: result.operationType,
+          authType: result.user.providerData[0].providerId,
+          token: token
+        });
+        loginStatusSet("1");
+        loadingSet(false);
+
+      }).catch((error) => {
+        loginStatusSet("0");
+        loadingSet(false);
+
+      });
 
 
   } catch (error) {

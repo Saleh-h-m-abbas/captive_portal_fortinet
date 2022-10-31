@@ -8,7 +8,6 @@ import {
 } from "react-icons/fa";
 import { useState } from "react";
 import SignIn from "./SignInWithCredentials/SignIn";
-
 import SignInPhoneNumber from "./SignInWithPhoneNumber/SignInWithPhoneNumber";
 
 const Auth = ({ loginStatusSet, userDataSet, loadingSet, magicVal, postVal }) => {
@@ -53,9 +52,7 @@ const Auth = ({ loginStatusSet, userDataSet, loadingSet, magicVal, postVal }) =>
           <div style={{ color: "#FFFFFF" }}>@2022 PowerEye</div>
         </div>
         <div id="back" className="back">
-
-          <SignInPhoneNumber loginStatusSet={loginStatusSet} userDataSet={userDataSet} loadingSet={loadingSet}  codeSendSet={codeSendSet} codeSend={codeSend} />
-          <div onClick={() => {setFlip(!flip);codeSendSet(false) }} className="btn"> &laquo;Back</div>
+          <SignInPhoneNumber loginStatusSet={loginStatusSet} userDataSet={userDataSet} loadingSet={loadingSet} codeSendSet={codeSendSet} flip={flip} setFlip={setFlip} codeSend={codeSend} />
         </div>
       </div>
     </>

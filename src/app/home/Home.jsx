@@ -41,14 +41,14 @@ const Home = () => {
       if (postVal !== null) {
         window.history.replaceState({}, document.title, "/");
         loadingSet(false);
-  
-      }else{
-        const intervalId = setInterval(() => {
+
+      } else {
+        setInterval(() => {
           retryButtonSet(true);
         }, 1000);
       }
     }
-          
+
     if (loginStatus !== null && loginStatus !== "0") {
       addToFirebase({
         loginStatus,
@@ -71,12 +71,12 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginStatus, setVariables]);
 
-  const redirectToCaptivePortal=()=>{
-    window.location.href='http://www.msftconnecttest.com/redirect'
+  const redirectToCaptivePortal = () => {
+    window.location.href = 'http://www.msftconnecttest.com/redirect'
   }
   return (
     <body >
-{loading&&  <div className="loader">
+      {loading && <div className="loader">
         <Circles
           height="100"
           width="100"
@@ -86,13 +86,13 @@ const Home = () => {
           wrapperClass=""
           visible={true}
         />
-        {retryButton&& <button className="button-redirect" onClick={()=>redirectToCaptivePortal()}>Please Try Again</button>}
-        
-        </div>}
-        
-     
-     {!retryButton&& <div className="home_class">
-      {loading&&<div className="loader-page" ></div>}
+        {retryButton && <button className="button-redirect" onClick={() => redirectToCaptivePortal()}>Please Try Again</button>}
+
+      </div>}
+
+
+      {!retryButton && <div className="home_class">
+        {loading && <div className="loader-page" ></div>}
         {loginStatus === "1" && (
           <FortinetForm
             values={{

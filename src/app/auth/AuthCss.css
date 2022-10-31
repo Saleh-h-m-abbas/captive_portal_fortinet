@@ -1,9 +1,10 @@
-body{ 
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
+
 .custom-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 5px;
@@ -13,12 +14,9 @@ body{
   height: 75%;
   transform-style: preserve-3d;
   transition: 150ms;
-  transform: perspective(1000px) rotateY(var(--rotate-y, 0))
-    translateY(var(--translate-y, 0));
-    
+  transform: perspective(1000px) rotateY(var(--rotate-y, 0)) translateY(var(--translate-y, 0));
+
 }
-
-
 
 
 .custom-card:hover {
@@ -69,6 +67,7 @@ body{
   backface-visibility: hidden;
   width: 85%;
 }
+
 .custom-card .back {
   backface-visibility: hidden;
   color: white;
@@ -89,21 +88,9 @@ body{
   font-size: 30px;
   font-weight: 500;
 }
-.back{
+
+.back {
   height: 100%;
-  justify-content: space-around; 
-}
-.btn {
-  /* display: flex; */
-  /* flex-direction: row; */
-  background-color: rgba(104, 248, 79, 0.607);
-  border: none;
-  color: rgb(0, 0, 0);
-  padding: 5px;
-  font-size: 20px;
-  cursor: pointer;
-  /* max-width: 60px; */
-}
-.btn:hover {
-  background-color: rgb(225, 254, 214);
+  justify-content: space-around;
+  align-items: center;
 }

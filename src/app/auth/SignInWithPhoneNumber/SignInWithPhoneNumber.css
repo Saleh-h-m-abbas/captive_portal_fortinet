@@ -1,0 +1,42 @@
+.btn {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #69f41e6d;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 18px;
+  padding: 10px;
+  width: 90%;
+  max-width: 345px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.btn:hover  {
+    background-color: #69f41e;
+  }
+
+/* .btn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+} */
+
+/* .btn span:before {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+
+
+.btn:hover span:before {
+  opacity: 1;
+  right: 0;
+} */
