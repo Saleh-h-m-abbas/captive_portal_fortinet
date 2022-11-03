@@ -21,9 +21,7 @@ const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet, codeSendSe
             }
         }, auth);
 
-
         let appVerifier = window.recaptchaVerifier;
-
 
         signInWithPhoneNumber(auth, fullNumber, appVerifier)
             .then((confirmationResult) => {
@@ -55,115 +53,72 @@ const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet, codeSendSe
     }
     return (
         <>
-            <div className="phone-title">Phone Number</div>
             <div>
                 {!codeSend && <div>
                     <label id="country_code-label">Country Code</label>
-                                    <select
-                                        labelId="country_code-label"
-                                        // className={useStyles.root}
-                                        id="country_code"
-                                        value={countryCode}
-                                        label="Country Code"
-                                        defaultValue="+970"
-                                        onChange={handleChange}
-                                    >
-                                        <option value={"+970"}>+970</option>
-                                        <option value={"+972"}>+972</option>
-                                    </select>
+                    <select
+                        labelId="country_code-label"
+                        className={"field"}
+                        id="country_code"
+                        value={countryCode}
+                        label="Country Code"
+                        defaultValue="+970"
+                        onChange={handleChange}
+                    >
+                        <option value={"+970"}>+970</option>
+                        <option value={"+972"}>+972</option>
+                    </select>
 
-                                    <div>
+                    <div   className="field">
 
-                                    <input
+                        <input
                             variant="standard"
-                                required
-                                id="outlined-required"
-                                label="Phone Number"
-                                type="number"
-                                onInput={(e) => {
-                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 9)
-                                    phoneNumberSet(e.target.value);
-                                }}
-                            />
-                                        </div>
-                    {/* <Grid container spacing={1}>
-                        <Grid item xs={4}>
-                            <Box sx={{ minWidth: 20 }}>
-                                <FormControl fullWidth >
-                                    <InputLabel id="country_code-label">Country Code</InputLabel>
-                                    <Select
-                                        labelId="country_code-label"
-                                        // className={useStyles.root}
-                                        id="country_code"
-                                        value={countryCode}
-                                        label="Country Code"
-                                        defaultValue="+970"
-                                        onChange={handleChange}
-                                    >
-                                        <MenuItem value={"+970"}>+970</MenuItem>
-                                        <MenuItem value={"+972"}>+972</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={8}>
-                            <TextField
-                            variant="standard"
-                                required
-                                id="outlined-required"
-                                label="Phone Number"
-                                type="number"
-                                onInput={(e) => {
-                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 9)
-                                    phoneNumberSet(e.target.value);
-                                }}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} padding={2}>
-                        <Grid item xs={12}>
-                            <Button id='sign-in-button' variant="contained" endIcon={<SendIcon />} color="success" onClick={() => phoneSend()}>
-                                Send
-                            </Button>
-                        </Grid>
-                    </Grid> */}
+                            required
+                      
+
+                            id="outlined-required"
+                            label="Phone Number"
+                            type="number"
+                            onInput={(e) => {
+                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 9)
+                                phoneNumberSet(e.target.value);
+                            }}
+                        />
+
+
+                    </div>
+
+                    <button id='sign-in-button' variant="contained" color="success" onClick={() => phoneSend()}>
+                        Send
+                    </button>
+
                 </div>}
 
 
 
                 {codeSend &&
                     <div>
-                        {/* <Grid>
-                            <TextField
-                                required
-                                id="outlined-required"
-                                label="Code Verirification"
-                                type="number"
-                                onInput={(e) => {
-                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 6)
-                                    veririficationCodeSet(e.target.value);
-                                }}
-                            /></Grid>
-                        <br />
-                        <Grid container spacing={3}>
+                        <input
+                            required
+                            id="outlined-required"
+                            label="Code Verirification"
+                            type="number"
+                            onInput={(e) => {
+                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 6)
+                                veririficationCodeSet(e.target.value);
+                            }} />
 
-                            <Grid item xs={12}>
-                                <Button id='sign-in-button' variant="contained" color="success" onClick={() => verifiy()}>
-                                    verifiy
-                                </Button>
-                            </Grid>
-                        </Grid> */}
+                        <button id='sign-in-button' variant="contained" color="success" onClick={() => verifiy()}>
+                            verifiy
+                        </button>
+
 
                     </div>
 
                 }
             </div>
 
-            <div
-                onClick={() => { setFlip(!flip); codeSendSet(false) }} className="btn"
-            >
-                <span>Back </span>
-            </div>
+
             <div hidden={true} id="reCAPTCHA"></div>
         </>
 
