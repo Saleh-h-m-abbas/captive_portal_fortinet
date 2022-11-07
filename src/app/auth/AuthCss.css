@@ -6,16 +6,15 @@ body {
 }
 
 .custom-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding: 15px;
   margin: auto;
   background-color: rgba(72, 72, 72, 0.5);
   height: 75%;
-  transform-style: preserve-3d;
-  /* transition: 150ms; */
-  /* transform: perspective(1000px) rotateY(var(--rotate-y, 0)) translateY(var(--translate-y, 0)); */
-
 }
 
 

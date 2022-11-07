@@ -1,7 +1,11 @@
 import "./SignIn.css";
 import { SignInSchema } from "./validation/Validation";
 import { Formik } from "formik";
+import { TextField } from "@mui/material";
+import { Stack } from "@mui/system";
+
 const SignIn = ({ magicVal, postVal, loadingSet }) => {
+
   return (
     <>
       <Formik
@@ -36,36 +40,30 @@ const SignIn = ({ magicVal, postVal, loadingSet }) => {
                   name="magic"
                   value={magicVal.magicVal}
                 />
+                <Stack spacing={1}>
+                  <TextField type={'text'}
+                    name="username"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.username}
+                    size="small"
+                    InputProps={{ style: { backgroundColor: "white", }, }}
+                    error={errors.username && touched.username}
+                    helperText={!errors.username || !touched.username ? "" : errors.username}
+                    id="username" label="Username" variant="filled" />
 
-                <input
-                  type="text"
-                  name="username"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.username}
-                  placeholder="Enter Username"
-                  className="username"
-                  id="username"
-                />
-                {errors.username && (
-                  <p className="error">
-                    {errors.username && touched.username && errors.username}
-                  </p>
-                )}
-                <input
-                  type="password"
-                  name="password"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.password}
-                  placeholder="Enter password"
-                  className="password"
-                />
-                {errors.password && (
-                  <p className="error">
-                    {errors.password && touched.password && errors.password}
-                  </p>
-                )}
+                  <TextField type={'password'}
+                    name="password"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    size="small"
+                    InputProps={{ style: { backgroundColor: "white" }, }}
+                    value={values.password}
+                    error={errors.password && touched.password}
+                    helperText={!errors.password || !touched.password ? "" : errors.password}
+                    id="password" label="Password" variant="filled" />
+
+                </Stack>
                 <button
                   className="submit-button"
                   type="submit"

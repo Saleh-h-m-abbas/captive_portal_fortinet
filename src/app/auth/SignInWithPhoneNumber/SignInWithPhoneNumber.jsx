@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import { auth } from '../../../firebase/firebase';
 import "./SignInWithPhoneNumber.css";
+import { Box, FormControl, InputLabel, MenuItem, NativeSelect, Select, TextField } from '@mui/material';
+import { Stack } from '@mui/system';
 
 const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet, codeSendSet, codeSend, flip, setFlip }) => {
     const [countryCode, countryCodeSet] = useState('+970');
@@ -55,38 +57,61 @@ const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet, codeSendSe
         <>
             <div>
                 {!codeSend && <div>
-                    <label id="country_code-label">Country Code</label>
-                    <select
-                        labelId="country_code-label"
-                        className={"field"}
-                        id="country_code"
-                        value={countryCode}
-                        label="Country Code"
-                        defaultValue="+970"
-                        onChange={handleChange}
-                    >
-                        <option value={"+970"}>+970</option>
-                        <option value={"+972"}>+972</option>
-                    </select>
+                    <Stack direction={'row'} spacing={2}>
+                        {/* <FormControl sx={{ minWidth: 120 }}>
 
-                    <div   className="field">
+                            <InputLabel id="country_code">Country Code</InputLabel>
 
-                        <input
-                            variant="standard"
-                            required
-                      
+                            <NativeSelect
+                                defaultValue="+970"
+                                onChange={handleChange}
+                                label="Age"
+                                size='small'
+                                value={countryCode}
+                                inputProps={{
+                                    name: 'country_code',
+                                    id: 'country_code',
+                                    style: { backgroundColor: "white" }
+                                }}
+                            >
+                                <option value={"+970"}>+970</option >
+                                <option value={"+972"}>+972</MenuItem >
+                            </NativeSelect>
+                        </FormControl> */}
 
-                            id="outlined-required"
-                            label="Phone Number"
-                            type="number"
-                            onInput={(e) => {
+                        <FormControl variant="filled"  sx={{  minWidth: 140 }}>
+                            <InputLabel id="demo-simple-select-filled-label">Country Code</InputLabel>
+                            <Select
+                                InputProps={{ style: { backgroundColor: "white" }, }}
+                                labelId="demo-simple-select-filled-label"
+                                id="demo-simple-select-filled"
+                                //   value={age}
+                                inputProps={{
+                                    style: { backgroundColor: "white" }
+                                }}
+                                defaultValue="+970"
+                                size='small'
+                                onChange={handleChange}
+                            >
+                                <MenuItem value={"+970"}>+970</MenuItem>
+                                <MenuItem value={"+972"}>+972</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <TextField type={'number'}
+                            name="phoneNumber"
+                            // onBlur={handleBlur}
+                            onChange={(e) => {
                                 e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 9)
                                 phoneNumberSet(e.target.value);
                             }}
-                        />
-
-
-                    </div>
+                            size="small"
+                            InputProps={{ style: { backgroundColor: "white" }, }}
+                            // value={values.password}
+                            // error={errors.password && touched.password}
+                            // helperText={!errors.password || !touched.password ? "" : errors.password}
+                            id="phoneNumber" label="Phone Number" variant="filled" />
+                    </Stack>
 
                     <button id='sign-in-button' variant="contained" color="success" onClick={() => phoneSend()}>
                         Send
