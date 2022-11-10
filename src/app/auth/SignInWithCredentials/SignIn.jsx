@@ -1,5 +1,5 @@
 import "./SignIn.css";
-import { SignInSchema } from "./validation/Validation";
+import { SignInSchema } from "../validation/Validation";
 import { Formik } from "formik";
 import { TextField } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -40,7 +40,7 @@ const SignIn = ({ magicVal, postVal, loadingSet }) => {
                   name="magic"
                   value={magicVal.magicVal}
                 />
-                <Stack spacing={1}>
+                <Stack container  spacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                   <TextField type={'text'}
                     name="username"
                     onBlur={handleBlur}

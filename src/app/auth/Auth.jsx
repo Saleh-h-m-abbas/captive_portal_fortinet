@@ -36,7 +36,7 @@ const Auth = ({ loginStatusSet, userDataSet, loadingSet, magicVal, postVal }) =>
             <div className="social-icons" onClick={() => signInWithTwitter({ loginStatusSet, userDataSet, loadingSet })}>
               <FaTwitter />
             </div>
-            <div className="social-icons" onClick={() => setFlip(!flip)}>
+            <div className="social-icons" onClick={() => {setFlip(!flip);codeSendSet(false);}}>
               {flip ? <FaPhoneAlt /> : <FaUserAlt />}
             </div>
           </div>
@@ -46,8 +46,9 @@ const Auth = ({ loginStatusSet, userDataSet, loadingSet, magicVal, postVal }) =>
               or
               <br />
               {flip ? "Premium Sign In" : "Sign In with Phone Number"}
+          
             </div>
-
+            <br />
             <div style={{ display: !flip ? "none" : "block" }}>
               <SignIn magicVal={magicVal} postVal={postVal} loadingSet={loadingSet} />
             </div>
