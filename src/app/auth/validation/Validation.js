@@ -12,12 +12,14 @@ export const SignInSchema = Yup.object().shape({
 
 export const PhoneSignInSchema = Yup.object().shape({
   phoneNumber: Yup.string()
-    .min(8, "Code must be 9 Numbers")
-    .max(9, "Code must be 9 Numbers")
+    .min(9, "Phone number must be more than 8 digit")
+    .max(9, "Phone number must be less than 10 digit")
     .required("Phone Number is required field"),
 });
-    // countryCode: Yup.string()
-    // .min(5, "Code must be 6 Numbers")
-    // .max(7, "Code must be 6 Numbers")
-    // .required("Code is a required field")
-    // .min(8, "Code must be 6 Numbers"),
+
+export const PhoneSignInCodeSchema = Yup.object().shape({
+  code: Yup.string()
+    .min(6, "Code must be more than 5 Numbers")
+    .max(6, "Code must be less than 7 Numbers")
+    .required("Phone Number is required field"),
+});
