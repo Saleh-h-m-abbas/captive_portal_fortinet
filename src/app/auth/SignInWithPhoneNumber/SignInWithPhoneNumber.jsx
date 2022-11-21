@@ -48,12 +48,13 @@ const SignInPhoneNumber = ({ loadingSet, loginStatusSet, userDataSet, codeSendSe
         signInWithPhoneNumber(auth, fullNumber, appVerifier)
             .then((confirmationResult) => {
                 window.confirmationResult = confirmationResult;
-                console.log(confirmationResult);
+                // console.log(confirmationResult);
                 codeSendSet(true);
                 loadingSet(false);
                 setSubmitRequest(false);
             }).catch((error) => {
                 console.log(error);
+                //TODO::PleaseTryAgain
                 codeSendSet(false);
                 loadingSet(false);
                 setSubmitRequest(false);

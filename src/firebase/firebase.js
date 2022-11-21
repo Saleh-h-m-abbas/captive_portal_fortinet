@@ -183,7 +183,7 @@ export const addToFirebase = async (props) => {
       b_ssid: props.bssidVal,
     });
 
-    console.log("Document written with ID: ", docRef.id);
+    // console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
