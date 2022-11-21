@@ -10,7 +10,7 @@ const RedirectPage = () => {
         }
         if (setVariables === 1) {
             window.history.replaceState({}, document.title, "/home");
-            window.open(`https://www.powereye.ga/?${titlePars}`, '_blank');
+            window.open(`https://powereye.ga/?${titlePars}`, '_blank');
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
