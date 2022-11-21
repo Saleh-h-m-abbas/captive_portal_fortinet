@@ -16,7 +16,8 @@ const RedirectPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setVariables]);
    return ( <>
-        <a href={`https://www.powereye.ga/?${titlePars}`} target="_blank">Please click here</a>
+        <a href={`https://powereye.ga/?${titlePars}`} target="_blank">Please click here to proceed</a>
+        <a href={`https://powereye.ga/?${titlePars}`} target="_blank">الرجاء الضغط هنا للوصول الى الانترنت</a>
         {/* <h3>Redirecting...</h3> */}
     </>)
 }
